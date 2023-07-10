@@ -1,13 +1,17 @@
-import { API_ENDPOINT } from "@/config";
-import { useAxios } from "@/hooks/useAxios";
-import { useEffect, useState } from "react";
 import { format } from 'date-fns';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+import { API_ENDPOINT } from '@/config';
+import { useAxios } from '@/hooks/useAxios';
 
 const Home = () => {
   const router = useRouter();
-  const [q, setQ] = useState<string | null>(router.query.q as string || null);
-  const { data } = useAxios<Movie[]>(`/movies?${new URLSearchParams({ q: q || '' })}`, { disable: !q, clear: !q });
+  const [q, setQ] = useState<string | null>((router.query.q as string) || null);
+  const { data } = useAxios<Movie[]>(
+    `/movies?${new URLSearchParams({ q: q || '' })}`,
+    { disable: !q, clear: !q },
+  );
   const movies = data || [];
 
   useEffect(() => {
@@ -32,13 +36,13 @@ const Home = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           type="text"
           placeholder="Search for any movie title.."
-          onChange={(e) => setQ(e.target.value)}
+          onChange={e => setQ(e.target.value)}
           value={q || ''}
           autoFocus
         />
       </form>
       <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8 mt-6">
-        {movies.map((movie) => (
+        {movies.map(movie => (
           <li key={movie.id} className="bg-gray-50 p-2 rounded-lg">
             <img
               className="aspect-[9/16] w-full rounded-md"
@@ -48,14 +52,16 @@ const Home = () => {
             />
             <div className="m-1 mt-2">
               <h2 className="text-lg font-semibold truncate">{movie.title}</h2>
-              <p className="text-sm text-gray-500">{format(new Date(movie.releaseDate), 'LLLL do, yyyy')}</p>
+              <p className="text-sm text-gray-500">
+                {format(new Date(movie.releaseDate), 'LLLL do, yyyy')}
+              </p>
             </div>
           </li>
         ))}
       </ul>
     </main>
-  )
-}
+  );
+};
 
 export default Home;
 
@@ -66,4 +72,4 @@ type Movie = {
   poster: string;
   wallpaper: string;
   releaseDate: string;
-}
+};

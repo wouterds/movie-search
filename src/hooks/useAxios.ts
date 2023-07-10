@@ -1,10 +1,14 @@
-import Axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
-import { API_ENDPOINT } from '@/config'
 
-const axios = Axios.create({ baseURL: API_ENDPOINT });
+import { API_ENDPOINT } from '@/config';
 
-export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolean, clear?: boolean }) => {
+const api = axios.create({ baseURL: API_ENDPOINT });
+
+export const useAxios = <T = object>(
+  endpoint: string,
+  options?: { disable?: boolean; clear?: boolean },
+) => {
   const disable = options?.disable || false;
   const clear = options?.clear || false;
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +21,7 @@ export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolea
       setHasError(false);
       setIsLoading(false);
     }
-  }, [clear])
+  }, [clear]);
 
   useEffect(() => {
     (async () => {
@@ -29,9 +33,9 @@ export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolea
       setIsLoading(true);
 
       try {
-        const response = await axios.get<T>(endpoint);
+        const response = await api.get<T>(endpoint);
         setData(response.data);
-        console.log(JSON.stringify(response.headers))
+        console.log(JSON.stringify(response.headers));
       } catch {
         setHasError(true);
       }
@@ -40,10 +44,12 @@ export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolea
     })();
   }, [endpoint, disable]);
 
-
-  return useMemo(() => ({
-    data,
-    isLoading,
-    hasError,
-  }), [isLoading, hasError, data]);
-}
+  return useMemo(
+    () => ({
+      data,
+      isLoading,
+      hasError,
+    }),
+    [isLoading, hasError, data],
+  );
+};
