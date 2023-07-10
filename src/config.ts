@@ -1,1 +1,1 @@
-export const API_ENDPOINT = 'https://movie-search-api.craftzing.dev';
+export const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
