@@ -4,11 +4,20 @@ import { API_ENDPOINT } from '@/config'
 
 const axios = Axios.create({ baseURL: API_ENDPOINT });
 
-export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolean }) => {
+export const useAxios = <T = any>(endpoint: string, options?: { disable?: boolean, clear?: boolean }) => {
   const disable = options?.disable || false;
+  const clear = options?.clear || false;
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState<T | null>(null);
+
+  useEffect(() => {
+    if (clear) {
+      setData(null);
+      setHasError(false);
+      setIsLoading(false);
+    }
+  }, [clear])
 
   useEffect(() => {
     (async () => {

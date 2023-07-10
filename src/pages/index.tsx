@@ -1,23 +1,43 @@
 import { API_ENDPOINT } from "@/config";
 import { useAxios } from "@/hooks/useAxios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { format } from 'date-fns';
+import { useRouter } from "next/router";
 
 const Home = () => {
-  const [q, setQ] = useState('');
-  const { data } = useAxios<Movie[]>(`/movies?${new URLSearchParams({ q })}`, { disable: !q });
+  const router = useRouter();
+  const [q, setQ] = useState<string | null>(router.query.q as string || null);
+  const { data } = useAxios<Movie[]>(`/movies?${new URLSearchParams({ q: q || '' })}`, { disable: !q, clear: !q });
   const movies = data || [];
+
+  useEffect(() => {
+    if (q !== router.query.q) {
+      if (q) {
+        router.replace({ query: { q } });
+      } else if (router.query.q) {
+        router.replace({ query: {} });
+      }
+    }
+
+    if (q === null && router.query.q) {
+      setQ(router.query.q as string);
+    }
+  }, [q, router]);
 
   return (
     <main className="flex flex-col min-h-screen w-full p-12">
+      <h1 className="text-4xl font-bold mb-4">Movies search</h1>
       <form className="max-w-2xl w-full">
         <input
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           type="text"
           placeholder="Search for any movie title.."
           onChange={(e) => setQ(e.target.value)}
+          value={q || ''}
+          autoFocus
         />
       </form>
-      <ul className="grid grid-flow-row-dense grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 mt-6">
+      <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8 mt-6">
         {movies.map((movie) => (
           <li key={movie.id} className="bg-gray-50 p-2 rounded-lg">
             <img
@@ -25,10 +45,10 @@ const Home = () => {
               src={`${API_ENDPOINT}${movie.poster}`}
               alt={movie.title}
               loading="lazy"
-              />
-            <div className="m-1 mt-3">
-              <h2 className="text-lg font-semibold">{movie.title}</h2>
-              <p className="text-sm text-gray-500">{movie.releaseDate}</p>
+            />
+            <div className="m-1 mt-2">
+              <h2 className="text-lg font-semibold truncate">{movie.title}</h2>
+              <p className="text-sm text-gray-500">{format(new Date(movie.releaseDate), 'LLLL do, yyyy')}</p>
             </div>
           </li>
         ))}
