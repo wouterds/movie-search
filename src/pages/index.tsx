@@ -1,32 +1,24 @@
 import { format } from 'date-fns';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { API_ENDPOINT } from '@/config';
 import { useAxios } from '@/hooks/useAxios';
+import { useSyncQuery } from '@/hooks/useSyncQuery';
 
 const Home = () => {
-  const router = useRouter();
-  const [q, setQ] = useState<string | null>((router.query.q as string) || null);
+  const [q, setQ] = useState<string | null>(null);
   const { data } = useAxios<Movie[]>(
     `/movies?${new URLSearchParams({ q: q || '' })}`,
     { disable: !q, clear: !q },
   );
   const movies = data || [];
 
+  const initialQueryParam = useSyncQuery({ q });
   useEffect(() => {
-    if (q !== router.query.q) {
-      if (q) {
-        router.replace({ query: { q } });
-      } else if (router.query.q) {
-        router.replace({ query: {} });
-      }
+    if (initialQueryParam && q === null) {
+      setQ(initialQueryParam);
     }
-
-    if (q === null && router.query.q) {
-      setQ(router.query.q as string);
-    }
-  }, [q, router]);
+  }, [initialQueryParam, q]);
 
   return (
     <main className="flex flex-col min-h-screen w-full p-12">
@@ -37,7 +29,7 @@ const Home = () => {
           type="text"
           placeholder="Search for any movie title.."
           onChange={e => setQ(e.target.value)}
-          value={q || ''}
+          value={initialQueryParam}
           autoFocus
         />
       </form>
