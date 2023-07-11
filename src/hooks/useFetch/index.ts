@@ -11,15 +11,10 @@ export const useFetch = <T = object>(endpoint: string) => {
         dispatch({ type: Action.FetchingData });
 
         const response = await fetch(endpoint);
-        response.headers.forEach((value, key) => {
-          console.log(`${key}: ${value}`);
-        });
+        const data = await response.json();
+        const cacheHit = response.headers.get('cf-cache-status') === 'HIT';
 
-        dispatch({
-          type: Action.DataFetched,
-          cacheHit: response.headers.get('cf-cache-status') === 'HIT',
-          data: await response.json(),
-        });
+        dispatch({ type: Action.DataFetched, cacheHit, data });
       } catch {
         dispatch({ type: Action.Error });
       }
