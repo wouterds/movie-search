@@ -17,8 +17,16 @@ export const useMovieSearch = (query?: string | null) => {
     }
   }, [q, fetch]);
 
+  const movies = useMemo(() => {
+    if (!q) {
+      return [];
+    }
+
+    return data || [];
+  }, [data, q]);
+
   return useMemo(
-    () => ({ movies: data || [], isLoading, hasError, cacheHit }),
-    [data, isLoading, hasError, cacheHit],
+    () => ({ movies, isLoading, hasError, cacheHit }),
+    [movies, isLoading, hasError, cacheHit],
   );
 };
