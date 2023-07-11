@@ -1,7 +1,6 @@
-import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import { API_ENDPOINT } from '@/config';
+import Movies from '@/components/Movies';
 import { useAxios } from '@/hooks/useAxios';
 import { useSyncQuery } from '@/hooks/useSyncQuery';
 
@@ -33,35 +32,9 @@ const Home = () => {
           autoFocus
         />
       </form>
-      <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8">
-        {movies.map(movie => (
-          <li key={movie.id} className="bg-gray-50 p-2 rounded-lg">
-            <img
-              className="aspect-[2/3] w-full rounded-md"
-              src={`${API_ENDPOINT}${movie.poster}`}
-              alt={movie.title}
-              loading="lazy"
-            />
-            <div className="m-1 mt-2">
-              <h2 className="text-lg font-semibold truncate">{movie.title}</h2>
-              <p className="text-sm text-gray-500">
-                {format(new Date(movie.releaseDate), 'LLLL do, yyyy')}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Movies data={movies} />
     </main>
   );
 };
 
 export default Home;
-
-type Movie = {
-  id: string;
-  title: string;
-  description: string;
-  poster: string;
-  wallpaper: string;
-  releaseDate: string;
-};
