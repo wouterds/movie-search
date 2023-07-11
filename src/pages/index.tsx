@@ -36,7 +36,7 @@ const Home = () => {
             <span className="font-medium text-white/90">{apiCalls}</span>
           </li>
           <li className="inline-block mx-1 sm:mx-2">
-            <span className="font-semibold">CF CDN hits:</span>{' '}
+            <span className="font-semibold">CDN hits:</span>{' '}
             <span className="font-medium text-white/90">{cacheHits}</span>
           </li>
           <li className="inline-block mx-1 sm:mx-2">
