@@ -13,7 +13,6 @@ const Home = () => {
 
   const wasLoading = usePrevious(isLoading);
   useEffect(() => {
-    console.log({ isLoading, wasLoading, cacheHit });
     if (!isLoading && wasLoading) {
       setApiCalls(calls => calls + 1);
       setCacheHits(hits => hits + (cacheHit ? 1 : 0));
