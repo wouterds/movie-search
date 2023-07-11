@@ -31,7 +31,7 @@ const Home = () => {
     <main className="flex flex-col min-h-screen w-full p-8 lg:p-12">
       <div className="flex flex-col justify-between items-start mb-8 lg:flex-row-reverse">
         <div className="border-2 border-orange-600 bg-gray-50 rounded-lg w-full mb-6 lg:mb-0 lg:w-48">
-          <h2 className="text-sm font-semibold uppercase bg-orange-600 text-orange-50 px-2 py-1.5 flex justify-between items-center">
+          <h2 className="text-sm font-semibold uppercase bg-orange-600 text-orange-50 px-2 py-1 flex justify-between items-center">
             <span>API Call Stats</span>
             <FaCloudflare className="inline-block text-lg mr-1" />
           </h2>
@@ -47,6 +47,14 @@ const Home = () => {
               <span className="font-semibold">Cache rate:</span>{' '}
               {apiCalls > 0 ? Math.round((cacheHits / apiCalls) * 100) : 0}%
             </p>
+            <div className="mt-1.5 bg-red-600 rounded-md h-2 overflow-hidden flex">
+              <div
+                className="bg-green-600 h-full transition-all duration-500"
+                style={{
+                  width: `${apiCalls > 0 ? (cacheHits / apiCalls) * 100 : 0}%`,
+                }}
+              />
+            </div>
           </div>
         </div>
 
@@ -64,6 +72,7 @@ const Home = () => {
           </form>
         </div>
       </div>
+
       <Movies data={movies} />
     </main>
   );
