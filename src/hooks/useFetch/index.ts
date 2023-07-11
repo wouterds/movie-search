@@ -10,7 +10,7 @@ export const useFetch = <T = object>(endpoint: string) => {
       try {
         dispatch({ type: Action.FetchingData });
 
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, { cache: 'no-cache' });
         const data = await response.json();
         const cacheHit = response.headers.get('cf-cache-status') === 'HIT';
 
