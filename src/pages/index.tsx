@@ -37,7 +37,7 @@ const Home = () => {
         {movies.map(movie => (
           <li key={movie.id} className="bg-gray-50 p-2 rounded-lg">
             <img
-              className="aspect-[9/16] w-full rounded-md"
+              className="aspect-[2/3] w-full rounded-md"
               src={`${API_ENDPOINT}${movie.poster}`}
               alt={movie.title}
               loading="lazy"
