@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { API_ENDPOINT } from '@/config';
 
@@ -6,17 +6,19 @@ import { useFetch } from './useFetch';
 
 export const useMovieSearch = (query?: string | null) => {
   const q = query ? query.trim() : '';
-  const allowedToFetch = !!q;
 
-  const { data, isLoading, hasError } = useFetch<Movie[]>(
+  const { fetch, data, isLoading, hasError, cacheHit } = useFetch<Movie[]>(
     API_ENDPOINT + `/movies?${new URLSearchParams({ q })}`,
-    allowedToFetch,
   );
 
-  const movies = useMemo(() => data || [], [data]);
+  useEffect(() => {
+    if (q) {
+      fetch();
+    }
+  }, [q, fetch]);
 
   return useMemo(
-    () => ({ movies, isLoading, hasError }),
-    [movies, isLoading, hasError],
+    () => ({ movies: data || [], isLoading, hasError, cacheHit }),
+    [data, isLoading, hasError, cacheHit],
   );
 };
