@@ -22,10 +22,10 @@ const Home = () => {
 
   return (
     <main className="flex flex-col min-h-screen w-full p-12">
-      <h1 className="text-4xl font-bold mb-4">Movies search</h1>
-      <form className="max-w-2xl w-full">
+      <h1 className="text-5xl font-bold mb-6">Movies Search</h1>
+      <form className="max-w-2xl w-full mb-6">
         <input
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
           type="text"
           placeholder="Search for any movie title.."
           onChange={e => setQ(e.target.value)}
@@ -33,7 +33,7 @@ const Home = () => {
           autoFocus
         />
       </form>
-      <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8 mt-6">
+      <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8">
         {movies.map(movie => (
           <li key={movie.id} className="bg-gray-50 p-2 rounded-lg">
             <img
