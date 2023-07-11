@@ -28,9 +28,9 @@ const Home = () => {
   }, [initialQueryParam, q]);
 
   return (
-    <main className="flex flex-col min-h-screen w-full p-8 lg:p-12">
+    <main className="flex flex-col min-h-screen w-full p-6 pt-5 sm:p-8 lg:p-12">
       <div className="flex flex-col justify-between items-start mb-8 lg:flex-row-reverse">
-        <div className="border-2 border-orange-600 bg-gray-50 rounded-lg w-full mb-6 lg:mb-0 lg:w-48">
+        <div className="border-2 border-orange-600 bg-gray-50 rounded-lg w-full mb-4 md:mb-6 lg:mb-0 lg:w-48">
           <h2 className="text-sm font-semibold uppercase bg-orange-600 text-orange-50 px-2 py-1 flex justify-between items-center">
             <span>API Call Stats</span>
             <FaCloudflare className="inline-block text-lg mr-1" />
@@ -59,7 +59,9 @@ const Home = () => {
         </div>
 
         <div className="w-full lg:max-w-2xl">
-          <h1 className="text-5xl font-bold mb-6">Movie Search</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+            Movie Search
+          </h1>
           <form>
             <input
               className="block w-full p-3 text-md text-gray-900 rounded-lg bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
