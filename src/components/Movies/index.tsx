@@ -5,7 +5,7 @@ type Props = {
 };
 
 const Movies = ({ data }: Props) => (
-  <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 gap-y-8">
+  <ul className="grid grid-flow-row-dense grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-6 gap-y-8">
     {data.map(movie => (
       <Movie key={movie.id} data={movie} />
     ))}

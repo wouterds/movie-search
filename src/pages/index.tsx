@@ -27,54 +27,44 @@ const Home = () => {
   }, [initialQueryParam, q]);
 
   return (
-    <main className="flex flex-col min-h-screen w-full p-6 pt-5 sm:p-8 lg:p-12">
-      <div className="flex flex-col justify-between items-start mb-8 lg:flex-row-reverse">
-        <div className="border-2 border-orange-600 bg-gray-50 rounded-lg w-full mb-4 md:mb-6 lg:mb-0 lg:w-48">
-          <h2 className="text-sm font-semibold uppercase bg-orange-600 text-orange-50 px-2 py-1 flex justify-between items-center">
-            <span>API Call Stats</span>
-            <FaCloudflare className="inline-block text-lg mr-1" />
-          </h2>
-          <div className="p-2 text-sm">
-            <p>
-              <span className="font-semibold">API calls:</span> {apiCalls}
-            </p>
-            <p>
-              <span className="font-semibold">Cloudflare CDN hits:</span>{' '}
-              {cacheHits}
-            </p>
-            <p>
-              <span className="font-semibold">Cache rate:</span>{' '}
+    <main className="flex flex-col min-h-screen w-full">
+      <div className="bg-orange-600 text-white w-full text-sm px-4 sm:px-6 py-3 flex items-center">
+        <FaCloudflare className="inline-block text-2xl leading-none mr-2 sm:mr-4" />
+        <ul className="inline-block">
+          <li className="inline-block mx-1 sm:mx-2">
+            <span className="font-semibold">API calls:</span>{' '}
+            <span className="font-medium text-white/90">{apiCalls}</span>
+          </li>
+          <li className="inline-block mx-1 sm:mx-2">
+            <span className="font-semibold">CF CDN hits:</span>{' '}
+            <span className="font-medium text-white/90">{cacheHits}</span>
+          </li>
+          <li className="inline-block mx-1 sm:mx-2">
+            <span className="font-semibold">Cache rate:</span>{' '}
+            <span className="font-medium text-white/90">
               {apiCalls > 0 ? Math.round((cacheHits / apiCalls) * 100) : 0}%
-            </p>
-            <div className="mt-1.5 bg-red-600 rounded-md h-2 overflow-hidden flex">
-              <div
-                className="bg-green-600 h-full transition-all duration-500"
-                style={{
-                  width: `${apiCalls > 0 ? (cacheHits / apiCalls) * 100 : 0}%`,
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full lg:max-w-2xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6">
-            Movie Search
-          </h1>
-          <form>
-            <input
-              className="block w-full p-3 text-md text-gray-900 rounded-lg bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              type="text"
-              placeholder="Search for any movie title.."
-              onChange={e => setQ(e.target.value)}
-              value={initialQueryParam}
-              autoFocus
-            />
-          </form>
-        </div>
+            </span>
+          </li>
+        </ul>
       </div>
 
-      <Movies data={movies} />
+      <div className="p-4 sm:p-6 md:p-8 lg:p-10 lg:px-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+          Movie Search
+        </h1>
+        <form className="w-full lg:max-w-2xl mb-6 md:mb-8 lg:mb-10">
+          <input
+            className="block w-full p-3 text-md text-gray-900 rounded-lg bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            type="text"
+            placeholder="Search for any movie title.."
+            onChange={e => setQ(e.target.value)}
+            value={initialQueryParam}
+            autoFocus
+          />
+        </form>
+
+        <Movies data={movies} />
+      </div>
     </main>
   );
 };
