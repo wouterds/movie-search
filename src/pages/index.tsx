@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FaCloudflare } from 'react-icons/fa';
 import { usePrevious } from 'react-use';
 
 import Movies from '@/components/Movies';
@@ -29,7 +28,6 @@ const Home = () => {
   return (
     <main className="flex flex-col min-h-screen w-full">
       <div className="bg-orange-600 text-white w-full text-sm px-4 sm:px-6 py-3 flex items-center">
-        <FaCloudflare className="inline-block text-2xl leading-none mr-2 sm:mr-4" />
         <ul className="inline-block">
           <li className="inline-block mx-1 sm:mx-2">
             <span className="font-semibold">API calls:</span>{' '}
